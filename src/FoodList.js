@@ -7,7 +7,7 @@ import FoodLink from "./FoodLink"
 export default function FoodList(props) {
 	return (
 		<Paper sx={{ m: 3, p: 2 }}>
-			<Typography variant="h2">Recipes</Typography>
+			<Typography variant="h3">Recipes</Typography>
 			<Grid container spacing={2}>
 				{props.foods &&
 					props.foods.map((food) => (

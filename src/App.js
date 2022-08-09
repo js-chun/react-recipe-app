@@ -1,6 +1,7 @@
 import { useState } from "react"
 import FoodSearch from "./FoodSearch"
 import FoodList from "./FoodList"
+import Typography from "@mui/material/Typography"
 
 function App() {
 	const [foods, setFoods] = useState("")
@@ -9,6 +10,7 @@ function App() {
 	}
 	return (
 		<div className="App">
+			<Typography variant="h2">Simple Recipe App</Typography>
 			<FoodSearch handleFoodSearch={handleFoodSearch} />
 			<FoodList foods={foods} />
 		</div>

@@ -16,7 +16,7 @@ export default function FoodFilters(props) {
 		)
 	}
 	return (
-		<Paper component="div" sx={{ m: 3, p: 2 }}>
+		<Paper elevation={2} sx={{ m: 2, p: 2 }}>
 			<Typography variant="h5">{filterNames[filterType]}</Typography>
 			<FormGroup aria-label="position" row>
 				{filters[filterType].map((dish) => (

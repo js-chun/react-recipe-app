@@ -4,6 +4,11 @@ import Paper from "@mui/material/Paper"
 import TextField from "@mui/material/TextField"
 import debounce from "lodash.debounce"
 import axios from "axios"
+import Typography from "@mui/material/Typography"
+import Accordion from "@mui/material/Accordion"
+import AccordionSummary from "@mui/material/AccordionSummary"
+import AccordionDetails from "@mui/material/AccordionDetails"
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 
 export default function FoodSearch(props) {
 	const [query, setQuery] = useState("")
@@ -72,18 +77,30 @@ export default function FoodSearch(props) {
 					variant="standard"
 				/>
 			</Paper>
-			<FoodFilters
-				filterType="mealType"
-				handleFilterChange={handleFilterChange}
-			/>
-			<FoodFilters
-				filterType="cuisineType"
-				handleFilterChange={handleFilterChange}
-			/>
-			<FoodFilters
-				filterType="dishType"
-				handleFilterChange={handleFilterChange}
-			/>
+			<Paper component="div" sx={{ m: 3, p: 2 }}>
+				<Accordion sx={{ boxShadow: "none" }}>
+					<AccordionSummary
+						expandIcon={<ExpandMoreIcon />}
+						aria-controls="panel1a-content"
+						id="panel1a-header">
+						<Typography variant="h5">Filters</Typography>
+					</AccordionSummary>
+					<AccordionDetails>
+						<FoodFilters
+							filterType="mealType"
+							handleFilterChange={handleFilterChange}
+						/>
+						<FoodFilters
+							filterType="cuisineType"
+							handleFilterChange={handleFilterChange}
+						/>
+						<FoodFilters
+							filterType="dishType"
+							handleFilterChange={handleFilterChange}
+						/>
+					</AccordionDetails>
+				</Accordion>
+			</Paper>
 		</div>
 	)
 }
