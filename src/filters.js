@@ -26,7 +26,7 @@ const dishTypes = [
 	"sweets",
 ]
 
-const mealTypes = ["breakfast", "brunch", "lunch/dinner", "snack", "teatime"]
+const mealTypes = ["breakfast", "brunch", "lunch", "dinner", "snack", "teatime"]
 
 const cuisineTypes = [
 	"american",

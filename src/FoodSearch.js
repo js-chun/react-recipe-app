@@ -8,11 +8,23 @@ import axios from "axios"
 export default function FoodSearch(props) {
 	const [query, setQuery] = useState("")
 	const [filters, setFilters] = useState("")
-	let url
 
-	const searchFood = async () => {
+	const modifyUrl = (value, filters) => {
+		let url = `https://api.edamam.com/api/recipes/v2?type=public&app_id=${process.env.REACT_APP_ID}&app_key=${process.env.REACT_APP_API_KEY}&q=`
+		url += value
+		for (let fType in filters) {
+			filters[fType].forEach((filter) => {
+				url += `&${fType}=${filter}`
+			})
+		}
+		searchFood(url)
+	}
+
+	const searchFood = async (url) => {
 		const result = await axios.get(url).catch((e) => {
 			console.log(e)
+			return
+			//error handling
 		})
 		props.handleFoodSearch(result.data.hits)
 	}
@@ -20,15 +32,7 @@ export default function FoodSearch(props) {
 	const debounceQuery = useCallback(
 		debounce((value, filters) => {
 			if (value) {
-				url = `https://api.edamam.com/api/recipes/v2?type=public&app_id=${process.env.REACT_APP_ID}&app_key=${process.env.REACT_APP_API_KEY}&q=`
-				url += value
-
-				for (let fType in filters) {
-					filters[fType].forEach((filter) => {
-						url += `&${fType}=${filter}`
-					})
-				}
-				searchFood()
+				modifyUrl(value, filters)
 			}
 		}, 500),
 		[]
@@ -41,16 +45,20 @@ export default function FoodSearch(props) {
 
 	const handleFilterChange = (filterType, value, isChecked) => {
 		const newObject = { ...filters }
+		const newValue = value.replace(" ", "%20")
 		if (isChecked) {
 			if (!newObject[filterType]) newObject[filterType] = []
-			if (!newObject[filterType].includes(value))
-				newObject[filterType].push(value)
+			if (!newObject[filterType].includes(newValue))
+				newObject[filterType].push(newValue)
 		} else {
 			newObject[filterType] = newObject[filterType].filter(
-				(filter) => filter !== value
+				(filter) => filter !== newValue
 			)
 		}
 		setFilters(newObject)
+		if (query) {
+			modifyUrl(query, newObject)
+		}
 	}
 
 	return (
