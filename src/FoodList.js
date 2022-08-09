@@ -1,13 +1,22 @@
 import React from "react"
 import Paper from "@mui/material/Paper"
 import Typography from "@mui/material/Typography"
+import Grid from "@mui/material/Grid"
 import FoodLink from "./FoodLink"
 
-export default function FoodList() {
+export default function FoodList(props) {
 	return (
 		<Paper sx={{ m: 3, p: 2 }}>
 			<Typography variant="h2">Recipes</Typography>
-			<FoodLink food={food} />
+			<Grid container spacing={2}>
+				{props.foods &&
+					props.foods.map((food) => (
+						<Grid item xl={3}>
+							<FoodLink food={food} />
+						</Grid>
+					))}
+			</Grid>
+			{/* <FoodLink food={food} /> */}
 		</Paper>
 	)
 }
