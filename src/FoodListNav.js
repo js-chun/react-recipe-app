@@ -4,13 +4,13 @@ import Button from "@mui/material/Button"
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore"
 import NavigateNextIcon from "@mui/icons-material/NavigateNext"
 
-export default function FoodListNav() {
+export default function FoodListNav(props) {
 	return (
 		<Box>
-			<Button variant="contained">
+			<Button variant="contained" onClick={props.handlePrevPage}>
 				<NavigateBeforeIcon />
 			</Button>
-			<Button variant="contained">
+			<Button variant="contained" onClick={props.handleNextPage}>
 				<NavigateNextIcon />
 			</Button>
 		</Box>

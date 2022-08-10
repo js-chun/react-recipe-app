@@ -56,7 +56,7 @@ export default function FoodLink(props) {
 			<Card
 				sx={{
 					width: "90%",
-					height: "350px",
+					height: "450px",
 					display: "inline-block",
 					m: 3,
 				}}>

@@ -9,7 +9,10 @@ export default function FoodList(props) {
 	return (
 		<Paper sx={{ m: 3, p: 2 }}>
 			<Typography variant="h3">Recipes</Typography>
-			<FoodListNav />
+			<FoodListNav
+				handlePrevPage={props.handlePrevPage}
+				handleNextPage={props.handleNextPage}
+			/>
 			<Grid container spacing={1}>
 				{props.foods &&
 					props.foods.map((food) => (
@@ -24,7 +27,10 @@ export default function FoodList(props) {
 						</Grid>
 					))}
 			</Grid>
-			<FoodListNav />
+			<FoodListNav
+				handlePrevPage={props.handlePrevPage}
+				handleNextPage={props.handleNextPage}
+			/>
 		</Paper>
 	)
 }
