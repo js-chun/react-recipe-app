@@ -4,7 +4,7 @@ import Stack from "@mui/material/Stack"
 
 export default function FoodTags(props) {
 	return (
-		<Stack mt={3} direction="row" spacing={1} flexWrap="wrap" gap={1}>
+		<Stack my={1} mx={1} direction="row" spacing={1} flexWrap="wrap" gap={1}>
 			{props.cuisineTag.map((cType) => (
 				<Chip label={cType} sx={{ backgroundColor: "#6886C5" }} />
 			))}

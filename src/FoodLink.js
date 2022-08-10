@@ -15,6 +15,7 @@ import KitchenIcon from "@mui/icons-material/Kitchen"
 import DinnerDiningIcon from "@mui/icons-material/DinnerDining"
 import ShareIcon from "@mui/icons-material/Share"
 import InfoIcon from "@mui/icons-material/Info"
+import Box from "@mui/material/Box"
 
 import RecipeDialog from "./RecipeDialog"
 
@@ -55,51 +56,72 @@ export default function FoodLink(props) {
 		<div>
 			<Card
 				sx={{
-					width: "350px",
-					height: "500px",
+					width: "90%",
+					height: "350px",
 					display: "inline-block",
 					m: 3,
 				}}>
-				<CardHeader title={food.recipe.label} />
-				<CardMedia
-					component="img"
-					height="150"
-					image={food.recipe.image}
-					alt={food.recipe.label}
+				<CardHeader sx={{ height: "10%" }} title={food.recipe.label} />
+				<Box sx={{ display: "flex", height: "65%" }}>
+					<CardMedia
+						component="img"
+						width="200px"
+						height="100%"
+						image={food.recipe.image}
+						alt={food.recipe.label}
+					/>
+					<CardContent>
+						<Typography
+							sx={{ fontSize: 14 }}
+							color="text.secondary"
+							gutterBottom>
+							<RiceBowlIcon /> &nbsp; Calories:{" "}
+							{Math.round(food.recipe.calories)} (
+							{Math.round(food.recipe.calories / food.recipe.yield)} per
+							serving)
+						</Typography>
+						<Typography
+							sx={{ fontSize: 14 }}
+							color="text.secondary"
+							gutterBottom>
+							<KitchenIcon />
+							&nbsp; {food.recipe.ingredientLines.length} Ingredients
+						</Typography>
+						<Typography
+							sx={{ fontSize: 14 }}
+							color="text.secondary"
+							gutterBottom>
+							<DinnerDiningIcon />
+							&nbsp; {food.recipe.yield} Servings
+						</Typography>
+					</CardContent>
+					<CardActions
+						disableSpacing={true}
+						sx={{
+							display: "flex",
+							flexDirection: "column",
+							alignItems: "center",
+						}}>
+						<Checkbox
+							icon={<FavoriteBorder />}
+							checkedIcon={<Favorite />}
+							checked={props.inFavs}
+							onChange={handleFavorites}
+						/>
+						<IconButton>
+							<ShareIcon />
+						</IconButton>
+						<IconButton onClick={handleClickOpen}>
+							<InfoIcon />
+						</IconButton>
+					</CardActions>
+				</Box>
+				<FoodTags
+					sx={{ height: "10%" }}
+					cuisineTag={food.recipe.cuisineType}
+					mealTag={food.recipe.mealType}
+					dishTag={food.recipe.dishType}
 				/>
-				<CardContent>
-					<Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-						<RiceBowlIcon /> &nbsp; Calories: {Math.round(food.recipe.calories)}{" "}
-						({Math.round(food.recipe.calories / food.recipe.yield)} per serving)
-					</Typography>
-					<Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-						<KitchenIcon />
-						&nbsp; {food.recipe.ingredientLines.length} Ingredients
-					</Typography>
-					<Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-						<DinnerDiningIcon />
-						&nbsp; {food.recipe.yield} Servings
-					</Typography>
-					<FoodTags
-						cuisineTag={food.recipe.cuisineType}
-						mealTag={food.recipe.mealType}
-						dishTag={food.recipe.dishType}
-					/>
-				</CardContent>
-				<CardActions>
-					<Checkbox
-						icon={<FavoriteBorder />}
-						checkedIcon={<Favorite />}
-						checked={props.inFavs}
-						onChange={handleFavorites}
-					/>
-					<IconButton>
-						<ShareIcon />
-					</IconButton>
-					<IconButton onClick={handleClickOpen}>
-						<InfoIcon />
-					</IconButton>
-				</CardActions>
 			</Card>
 			<RecipeDialog
 				open={open}

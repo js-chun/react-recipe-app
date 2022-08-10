@@ -8,10 +8,10 @@ export default function FoodList(props) {
 	return (
 		<Paper sx={{ m: 3, p: 2 }}>
 			<Typography variant="h3">Recipes</Typography>
-			<Grid container spacing={2}>
+			<Grid container spacing={1}>
 				{props.foods &&
 					props.foods.map((food) => (
-						<Grid item xl={3}>
+						<Grid md={6}>
 							<FoodLink
 								food={food}
 								inFavs={props.favs.some(
