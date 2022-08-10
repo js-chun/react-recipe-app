@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import FoodTags from "./FoodTags"
 import Card from "@mui/material/Card"
 import CardHeader from "@mui/material/CardHeader"
 import CardMedia from "@mui/material/CardMedia"
@@ -14,8 +15,6 @@ import KitchenIcon from "@mui/icons-material/Kitchen"
 import DinnerDiningIcon from "@mui/icons-material/DinnerDining"
 import ShareIcon from "@mui/icons-material/Share"
 import InfoIcon from "@mui/icons-material/Info"
-import Chip from "@mui/material/Chip"
-import Stack from "@mui/material/Stack"
 
 import RecipeDialog from "./RecipeDialog"
 
@@ -81,17 +80,11 @@ export default function FoodLink(props) {
 						<DinnerDiningIcon />
 						&nbsp; {food.recipe.yield} Servings
 					</Typography>
-					<Stack mt={3} direction="row" spacing={1} flexWrap="wrap" gap={1}>
-						{food.recipe.cuisineType.map((cType) => (
-							<Chip label={cType} sx={{ backgroundColor: "#6886C5" }} />
-						))}
-						{food.recipe.mealType.map((mType) => (
-							<Chip label={mType} sx={{ backgroundColor: "#FFACB7" }} />
-						))}
-						{food.recipe.dishType.map((dType) => (
-							<Chip label={dType} sx={{ backgroundColor: "#FFE0AC" }} />
-						))}
-					</Stack>
+					<FoodTags
+						cuisineTag={food.recipe.cuisineType}
+						mealTag={food.recipe.mealType}
+						dishTag={food.recipe.dishType}
+					/>
 				</CardContent>
 				<CardActions>
 					<Checkbox
