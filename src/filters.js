@@ -52,7 +52,7 @@ const cuisineTypes = [
 	"world",
 ]
 
-const filters = {
+const allFilters = {
 	mealType: mealTypes,
 	cuisineType: cuisineTypes,
 	dishType: dishTypes,
@@ -64,4 +64,4 @@ const filterNames = {
 	dishType: "Dish Type",
 }
 
-export { filters, filterNames }
+export { allFilters, filterNames }

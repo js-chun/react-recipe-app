@@ -1,5 +1,5 @@
 import React from "react"
-import { filters, filterNames } from "./filters"
+import { allFilters, filterNames } from "./filters"
 import Typography from "@mui/material/Typography"
 import Paper from "@mui/material/Paper"
 import Checkbox from "@mui/material/Checkbox"
@@ -19,9 +19,10 @@ export default function FoodFilters(props) {
 		<Paper elevation={2} sx={{ m: 2, p: 2 }}>
 			<Typography variant="h5">{filterNames[filterType]}</Typography>
 			<FormGroup aria-label="position" row>
-				{filters[filterType].map((dish) => (
+				{allFilters[filterType].map((dish) => (
 					<FormControlLabel
 						key={`${filterType}${dish.replace(" ", "")}`}
+						checked={props.filters[filterType].includes(dish)}
 						control={<Checkbox onChange={handleFilterChange} />}
 						label={dish}
 						labelPlacement="end"

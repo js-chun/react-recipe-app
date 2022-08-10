@@ -36,7 +36,8 @@ export default function RecipeDialog(props) {
 
 	return (
 		<Dialog
-			fullWidth="sm"
+			maxWidth="xs"
+			fullWidth={true}
 			onClose={handleClose}
 			open={open}
 			scroll="paper"

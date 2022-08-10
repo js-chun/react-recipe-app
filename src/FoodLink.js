@@ -13,7 +13,6 @@ import IconButton from "@mui/material/IconButton"
 import RiceBowlIcon from "@mui/icons-material/RiceBowl"
 import KitchenIcon from "@mui/icons-material/Kitchen"
 import DinnerDiningIcon from "@mui/icons-material/DinnerDining"
-import ShareIcon from "@mui/icons-material/Share"
 import InfoIcon from "@mui/icons-material/Info"
 import Box from "@mui/material/Box"
 
@@ -100,7 +99,6 @@ export default function FoodLink(props) {
 						sx={{
 							display: "flex",
 							flexDirection: "column",
-							alignItems: "center",
 						}}>
 						<Checkbox
 							icon={<FavoriteBorder />}
@@ -108,9 +106,6 @@ export default function FoodLink(props) {
 							checked={props.inFavs}
 							onChange={handleFavorites}
 						/>
-						<IconButton>
-							<ShareIcon />
-						</IconButton>
 						<IconButton onClick={handleClickOpen}>
 							<InfoIcon />
 						</IconButton>

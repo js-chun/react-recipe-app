@@ -9,17 +9,23 @@ import Accordion from "@mui/material/Accordion"
 import AccordionSummary from "@mui/material/AccordionSummary"
 import AccordionDetails from "@mui/material/AccordionDetails"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
+import Button from "@mui/material/Button"
+import ClearIcon from "@mui/icons-material/Clear"
 
 export default function FoodSearch(props) {
 	const [query, setQuery] = useState("")
-	const [filters, setFilters] = useState("")
+	const [filters, setFilters] = useState({
+		mealType: [],
+		dishType: [],
+		cuisineType: [],
+	})
 
 	const modifyUrl = (value, filters) => {
 		let url = `https://api.edamam.com/api/recipes/v2?type=public&app_id=${process.env.REACT_APP_ID}&app_key=${process.env.REACT_APP_API_KEY}&q=`
 		url += value
 		for (let fType in filters) {
 			filters[fType].forEach((filter) => {
-				url += `&${fType}=${filter}`
+				url += `&${fType}=${filter.replace(" ", "%20")}`
 			})
 		}
 		searchFood(url)
@@ -31,7 +37,7 @@ export default function FoodSearch(props) {
 			return
 			//error handling
 		})
-		props.handleFoodSearch(result.data.hits)
+		props.handleFoodSearch(result.data, url)
 	}
 
 	const debounceQuery = useCallback(
@@ -49,15 +55,15 @@ export default function FoodSearch(props) {
 	}
 
 	const handleFilterChange = (filterType, value, isChecked) => {
+		//filter change with favorites to be included
 		const newObject = { ...filters }
-		const newValue = value.replace(" ", "%20")
 		if (isChecked) {
 			if (!newObject[filterType]) newObject[filterType] = []
-			if (!newObject[filterType].includes(newValue))
-				newObject[filterType].push(newValue)
+			if (!newObject[filterType].includes(value))
+				newObject[filterType].push(value)
 		} else {
 			newObject[filterType] = newObject[filterType].filter(
-				(filter) => filter !== newValue
+				(filter) => filter !== value
 			)
 		}
 		setFilters(newObject)
@@ -66,16 +72,34 @@ export default function FoodSearch(props) {
 		}
 	}
 
+	const handleReset = () => {
+		setQuery("")
+		setFilters({
+			mealType: [],
+			dishType: [],
+			cuisineType: [],
+		})
+		props.resetFoods()
+	}
+
 	return (
 		<div>
-			<Paper component="div" sx={{ m: 3, p: 2 }}>
+			<Paper
+				component="div"
+				sx={{ m: 3, p: 2, display: "flex", justifyContent: "space-between" }}>
 				<TextField
-					sx={{ width: "100%" }}
+					sx={{ width: "80%" }}
 					value={query}
 					onChange={handleQueryChange}
 					label="Keywords"
 					variant="standard"
 				/>
+				<Button
+					sx={{ width: "50px", height: "50px" }}
+					variant="contained"
+					onClick={handleReset}>
+					<ClearIcon />
+				</Button>
 			</Paper>
 			<Paper component="div" sx={{ m: 3, p: 2 }}>
 				<Accordion sx={{ boxShadow: "none" }}>
@@ -87,14 +111,17 @@ export default function FoodSearch(props) {
 					</AccordionSummary>
 					<AccordionDetails>
 						<FoodFilters
+							filters={filters}
 							filterType="mealType"
 							handleFilterChange={handleFilterChange}
 						/>
 						<FoodFilters
+							filters={filters}
 							filterType="cuisineType"
 							handleFilterChange={handleFilterChange}
 						/>
 						<FoodFilters
+							filters={filters}
 							filterType="dishType"
 							handleFilterChange={handleFilterChange}
 						/>

@@ -3,15 +3,17 @@ import Paper from "@mui/material/Paper"
 import Typography from "@mui/material/Typography"
 import Grid from "@mui/material/Grid"
 import FoodLink from "./FoodLink"
+import FoodListNav from "./FoodListNav"
 
 export default function FoodList(props) {
 	return (
 		<Paper sx={{ m: 3, p: 2 }}>
 			<Typography variant="h3">Recipes</Typography>
+			<FoodListNav />
 			<Grid container spacing={1}>
 				{props.foods &&
 					props.foods.map((food) => (
-						<Grid md={6}>
+						<Grid item md={6}>
 							<FoodLink
 								food={food}
 								inFavs={props.favs.some(
@@ -22,6 +24,7 @@ export default function FoodList(props) {
 						</Grid>
 					))}
 			</Grid>
+			<FoodListNav />
 		</Paper>
 	)
 }

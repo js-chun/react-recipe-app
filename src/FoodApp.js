@@ -8,13 +8,20 @@ export default function FoodApp() {
 	const initial = JSON.parse(window.localStorage.getItem("fav_recipes")) || []
 	const [foods, setFoods] = useState(initial)
 	const [favs, setFavs] = useState(initial)
-	const handleFoodSearch = (foodData) => {
-		setFoods(foodData)
+	const [searchPgs, setSearchPgs] = useState([])
+
+	const handleFoodSearch = (foodData, url) => {
+		setFoods(foodData.hits)
+		//need to set url
 	}
 
-	useEffect(() => {
-		window.localStorage.setItem("fav_recipes", JSON.stringify(favs))
-	}, [favs])
+	const resetFoods = () => {
+		setFoods(favs)
+	}
+
+	const handleChangePage = (isNext) => {
+		//handle page change
+	}
 
 	const handleAddFavs = (foodData, isChecked) => {
 		let newFavs = [...favs]
@@ -28,10 +35,14 @@ export default function FoodApp() {
 		setFavs(newFavs)
 	}
 
+	useEffect(() => {
+		window.localStorage.setItem("fav_recipes", JSON.stringify(favs))
+	}, [favs])
+
 	return (
 		<Container>
 			<Typography variant="h2">Simple Recipe App</Typography>
-			<FoodSearch handleFoodSearch={handleFoodSearch} />
+			<FoodSearch handleFoodSearch={handleFoodSearch} resetFoods={resetFoods} />
 			{foods && (
 				<FoodList foods={foods} favs={favs} handleAddFavs={handleAddFavs} />
 			)}
