@@ -12,11 +12,16 @@ export default function FoodList(props) {
 				{props.foods &&
 					props.foods.map((food) => (
 						<Grid item xl={3}>
-							<FoodLink food={food} />
+							<FoodLink
+								food={food}
+								inFavs={props.favs.some(
+									(fav) => fav.recipe.uri === food.recipe.uri
+								)}
+								handleAddFavs={props.handleAddFavs}
+							/>
 						</Grid>
 					))}
 			</Grid>
-			{/* <FoodLink food={food} /> */}
 		</Paper>
 	)
 }

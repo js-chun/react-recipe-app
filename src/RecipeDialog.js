@@ -68,7 +68,7 @@ export default function RecipeDialog(props) {
 						<Typography>
 							{food.recipe.ingredientLines.length} Ingredients
 						</Typography>
-						<List>
+						<List dense={true}>
 							{food.recipe.ingredientLines.map((ing) => (
 								<ListItem>
 									<ListItemText primary={ing} />
@@ -78,15 +78,37 @@ export default function RecipeDialog(props) {
 					</Box>
 					<Box>
 						<Typography>Nutrition</Typography>
-						<Stack direction="column" spacing={1}>
-							<Paper>Calories: {Math.round(food.recipe.calories)}</Paper>
-							<Paper>Servings: {food.recipe.yield}</Paper>
+						<Stack direction="row" spacing={1} justifyContent="center">
+							<Paper
+								sx={{
+									width: "35%",
+									display: "flex",
+									flexDirection: "column",
+									alignItems: "center",
+								}}>
+								<Typography>{Math.round(food.recipe.calories)}</Typography>
+								<Typography>TOTAL CALORIES</Typography>
+							</Paper>
+							<Paper
+								sx={{
+									width: "35%",
+									display: "flex",
+									flexDirection: "column",
+									alignItems: "center",
+								}}>
+								<Typography>{food.recipe.yield}</Typography>
+								<Typography>SERVINGS</Typography>
+							</Paper>
 						</Stack>
 						<TableContainer component={Paper}>
 							<Table size="small" aria-label="a dense table">
 								<TableHead>
 									<TableRow>
-										<TableCell>Nutrient</TableCell>
+										<TableCell>
+											Per Serving (
+											{Math.round(food.recipe.totalWeight / food.recipe.yield)}
+											g)
+										</TableCell>
 										<TableCell align="right">Amount</TableCell>
 										<TableCell align="right">Daily</TableCell>
 									</TableRow>

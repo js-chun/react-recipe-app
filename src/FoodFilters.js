@@ -21,6 +21,7 @@ export default function FoodFilters(props) {
 			<FormGroup aria-label="position" row>
 				{filters[filterType].map((dish) => (
 					<FormControlLabel
+						key={`${filterType}${dish.replace(" ", "")}`}
 						control={<Checkbox onChange={handleFilterChange} />}
 						label={dish}
 						labelPlacement="end"

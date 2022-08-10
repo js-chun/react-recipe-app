@@ -4,12 +4,14 @@ import CardHeader from "@mui/material/CardHeader"
 import CardMedia from "@mui/material/CardMedia"
 import CardActions from "@mui/material/CardActions"
 import CardContent from "@mui/material/CardContent"
+import Checkbox from "@mui/material/Checkbox"
+import FavoriteBorder from "@mui/icons-material/FavoriteBorder"
+import Favorite from "@mui/icons-material/Favorite"
 import Typography from "@mui/material/Typography"
 import IconButton from "@mui/material/IconButton"
 import RiceBowlIcon from "@mui/icons-material/RiceBowl"
 import KitchenIcon from "@mui/icons-material/Kitchen"
 import DinnerDiningIcon from "@mui/icons-material/DinnerDining"
-import FavoriteIcon from "@mui/icons-material/Favorite"
 import ShareIcon from "@mui/icons-material/Share"
 import InfoIcon from "@mui/icons-material/Info"
 import Chip from "@mui/material/Chip"
@@ -23,18 +25,23 @@ export default function FoodLink(props) {
 
 	const consolidateNutrients = (foodObj) => {
 		let nutritionFacts = []
+		const servings = foodObj.recipe.yield
 		const totalDaily = foodObj.recipe.totalDaily
 		const totalNuts = foodObj.recipe.totalNutrients
 		for (let nutrient in totalDaily) {
 			nutritionFacts.push({
 				label: totalDaily[nutrient].label,
-				amount: `${totalNuts[nutrient].quantity.toFixed(2)}${
+				amount: `${(totalNuts[nutrient].quantity / servings).toFixed(2)}${
 					totalNuts[nutrient].unit
 				}`,
-				daily: `${totalDaily[nutrient].quantity.toFixed(2)}%`,
+				daily: `${(totalDaily[nutrient].quantity / servings).toFixed(2)}%`,
 			})
 		}
 		return nutritionFacts
+	}
+
+	const handleFavorites = (evt) => {
+		props.handleAddFavs(food, evt.target.checked)
 	}
 
 	const handleClickOpen = () => {
@@ -63,7 +70,8 @@ export default function FoodLink(props) {
 				/>
 				<CardContent>
 					<Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-						<RiceBowlIcon /> &nbsp; Calories: {food.recipe.calories}
+						<RiceBowlIcon /> &nbsp; Calories: {Math.round(food.recipe.calories)}{" "}
+						({Math.round(food.recipe.calories / food.recipe.yield)} per serving)
 					</Typography>
 					<Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
 						<KitchenIcon />
@@ -73,7 +81,7 @@ export default function FoodLink(props) {
 						<DinnerDiningIcon />
 						&nbsp; {food.recipe.yield} Servings
 					</Typography>
-					<Stack direction="row" spacing={1}>
+					<Stack mt={3} direction="row" spacing={1} flexWrap="wrap" gap={1}>
 						{food.recipe.cuisineType.map((cType) => (
 							<Chip label={cType} sx={{ backgroundColor: "#6886C5" }} />
 						))}
@@ -86,9 +94,12 @@ export default function FoodLink(props) {
 					</Stack>
 				</CardContent>
 				<CardActions>
-					<IconButton>
-						<FavoriteIcon />
-					</IconButton>
+					<Checkbox
+						icon={<FavoriteBorder />}
+						checkedIcon={<Favorite />}
+						checked={props.inFavs}
+						onChange={handleFavorites}
+					/>
 					<IconButton>
 						<ShareIcon />
 					</IconButton>
