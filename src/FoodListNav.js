@@ -6,11 +6,11 @@ import NavigateNextIcon from "@mui/icons-material/NavigateNext"
 
 export default function FoodListNav(props) {
 	return (
-		<Box>
-			<Button variant="contained" onClick={props.handlePrevPage}>
+		<Box m={3} sx={{ display: "flex", justifyContent: "center" }}>
+			<Button sx={{ mx: 1 }} variant="contained" onClick={props.handlePrevPage}>
 				<NavigateBeforeIcon />
 			</Button>
-			<Button variant="contained" onClick={props.handleNextPage}>
+			<Button sx={{ mx: 1 }} variant="contained" onClick={props.handleNextPage}>
 				<NavigateNextIcon />
 			</Button>
 		</Box>

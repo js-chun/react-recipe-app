@@ -15,13 +15,17 @@ import Stack from "@mui/material/Stack"
 import Paper from "@mui/material/Paper"
 import MenuBookIcon from "@mui/icons-material/MenuBook"
 import ListItemText from "@mui/material/ListItemText"
+import NutritionTable from "./NutritionTable"
+import { styled } from "@mui/material/styles"
 
-import Table from "@mui/material/Table"
-import TableBody from "@mui/material/TableBody"
-import TableCell from "@mui/material/TableCell"
-import TableContainer from "@mui/material/TableContainer"
-import TableHead from "@mui/material/TableHead"
-import TableRow from "@mui/material/TableRow"
+const Item = styled(Paper)(({ theme }) => ({
+	width: "35%",
+	display: "flex",
+	flexDirection: "column",
+	alignItems: "center",
+	backgroundColor: "#7F5283",
+	color: "white",
+}))
 
 export default function RecipeDialog(props) {
 	const { onClose, open, food, nutFacts } = props
@@ -45,15 +49,27 @@ export default function RecipeDialog(props) {
 			aria-describedby="scroll-dialog-description">
 			<DialogTitle id="scroll-dialog-title">{food.recipe.label}</DialogTitle>
 			<DialogContent dividers={true}>
-				<Box>
+				<Box
+					my={2}
+					sx={{
+						display: "flex",
+						flexDirection: "column",
+						alignItems: "center",
+					}}>
 					<Button onClick={handleLinkOpen} variant="contained">
 						<MenuBookIcon /> &nbsp; Preparation
 					</Button>
-					from {food.recipe.source}
+					<Typography variant="h6">from {food.recipe.source}</Typography>
 				</Box>
-				<Box>
-					<Typography>
-						{food.recipe.ingredientLines.length} Ingredients
+				<Box
+					my={2}
+					sx={{
+						backgroundColor: "#7F5283",
+						color: "white",
+						borderRadius: "1.5rem",
+					}}>
+					<Typography variant="h6" align="center">
+						{food.recipe.ingredientLines.length} INGREDIENTS
 					</Typography>
 					<List dense={true}>
 						{food.recipe.ingredientLines.map((ing) => (
@@ -63,58 +79,20 @@ export default function RecipeDialog(props) {
 						))}
 					</List>
 				</Box>
-				<Typography>Nutrition</Typography>
-				<Stack direction="row" spacing={1} justifyContent="center">
-					<Paper
-						sx={{
-							width: "35%",
-							display: "flex",
-							flexDirection: "column",
-							alignItems: "center",
-						}}>
+				<Typography variant="h6" align="center">
+					NUTRITION
+				</Typography>
+				<Stack direction="row" my={2} spacing={1} justifyContent="center">
+					<Item>
 						<Typography>{Math.round(food.recipe.calories)}</Typography>
 						<Typography>TOTAL CALORIES</Typography>
-					</Paper>
-					<Paper
-						sx={{
-							width: "35%",
-							display: "flex",
-							flexDirection: "column",
-							alignItems: "center",
-						}}>
+					</Item>
+					<Item>
 						<Typography>{food.recipe.yield}</Typography>
 						<Typography>SERVINGS</Typography>
-					</Paper>
+					</Item>
 				</Stack>
-				<TableContainer component={Paper}>
-					<Table size="small" aria-label="a dense table">
-						<TableHead>
-							<TableRow>
-								<TableCell>
-									Per Serving (
-									{Math.round(food.recipe.totalWeight / food.recipe.yield)}
-									g)
-								</TableCell>
-								<TableCell align="right">Amount</TableCell>
-								<TableCell align="right">Daily</TableCell>
-							</TableRow>
-						</TableHead>
-						<TableBody>
-							{nutFacts.map((nutrient) => (
-								<TableRow
-									sx={{
-										"&:last-child td, &:last-child th": { border: 0 },
-									}}>
-									<TableCell component="th" scope="row">
-										{nutrient.label}
-									</TableCell>
-									<TableCell align="right">{nutrient.amount}</TableCell>
-									<TableCell align="right">{nutrient.daily}</TableCell>
-								</TableRow>
-							))}
-						</TableBody>
-					</Table>
-				</TableContainer>
+				<NutritionTable food={food.recipe} nutrients={nutFacts} />
 			</DialogContent>
 			<DialogActions>
 				<Button onClick={handleClose}>Close</Button>

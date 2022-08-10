@@ -88,17 +88,17 @@ export default function FoodSearch(props) {
 				component="div"
 				sx={{ m: 3, p: 2, display: "flex", justifyContent: "space-between" }}>
 				<TextField
-					sx={{ width: "80%" }}
+					sx={{ width: "85%" }}
 					value={query}
 					onChange={handleQueryChange}
 					label="Keywords"
 					variant="standard"
 				/>
 				<Button
-					sx={{ width: "50px", height: "50px" }}
+					sx={{ width: "100px", height: "50px" }}
 					variant="contained"
 					onClick={handleReset}>
-					<ClearIcon />
+					<Typography variant="h6">Clear</Typography> <ClearIcon />
 				</Button>
 			</Paper>
 			<Paper component="div" sx={{ m: 3, p: 2 }}>

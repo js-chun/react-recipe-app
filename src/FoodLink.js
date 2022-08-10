@@ -56,61 +56,43 @@ export default function FoodLink(props) {
 			<Card
 				sx={{
 					width: "90%",
-					height: "450px",
+					height: "600px",
 					display: "inline-block",
 					m: 3,
 				}}>
 				<CardHeader sx={{ height: "10%" }} title={food.recipe.label} />
-				<Box sx={{ display: "flex", height: "65%" }}>
-					<CardMedia
-						component="img"
-						width="200px"
-						height="100%"
-						image={food.recipe.image}
-						alt={food.recipe.label}
+				<CardMedia
+					component="img"
+					width="100%"
+					height="35%"
+					image={food.recipe.image}
+					alt={food.recipe.label}
+				/>
+				<CardContent height="20%">
+					<Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+						<RiceBowlIcon /> &nbsp; Calories: {Math.round(food.recipe.calories)}{" "}
+						({Math.round(food.recipe.calories / food.recipe.yield)} per serving)
+					</Typography>
+					<Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+						<KitchenIcon />
+						&nbsp; {food.recipe.ingredientLines.length} Ingredients
+					</Typography>
+					<Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+						<DinnerDiningIcon />
+						&nbsp; {food.recipe.yield} Servings
+					</Typography>
+				</CardContent>
+				<CardActions height="10%">
+					<Checkbox
+						icon={<FavoriteBorder />}
+						checkedIcon={<Favorite />}
+						checked={props.inFavs}
+						onChange={handleFavorites}
 					/>
-					<CardContent>
-						<Typography
-							sx={{ fontSize: 14 }}
-							color="text.secondary"
-							gutterBottom>
-							<RiceBowlIcon /> &nbsp; Calories:{" "}
-							{Math.round(food.recipe.calories)} (
-							{Math.round(food.recipe.calories / food.recipe.yield)} per
-							serving)
-						</Typography>
-						<Typography
-							sx={{ fontSize: 14 }}
-							color="text.secondary"
-							gutterBottom>
-							<KitchenIcon />
-							&nbsp; {food.recipe.ingredientLines.length} Ingredients
-						</Typography>
-						<Typography
-							sx={{ fontSize: 14 }}
-							color="text.secondary"
-							gutterBottom>
-							<DinnerDiningIcon />
-							&nbsp; {food.recipe.yield} Servings
-						</Typography>
-					</CardContent>
-					<CardActions
-						disableSpacing={true}
-						sx={{
-							display: "flex",
-							flexDirection: "column",
-						}}>
-						<Checkbox
-							icon={<FavoriteBorder />}
-							checkedIcon={<Favorite />}
-							checked={props.inFavs}
-							onChange={handleFavorites}
-						/>
-						<IconButton onClick={handleClickOpen}>
-							<InfoIcon />
-						</IconButton>
-					</CardActions>
-				</Box>
+					<IconButton onClick={handleClickOpen}>
+						<InfoIcon />
+					</IconButton>
+				</CardActions>
 				<FoodTags
 					sx={{ height: "10%" }}
 					cuisineTypes={food.recipe.cuisineType}
