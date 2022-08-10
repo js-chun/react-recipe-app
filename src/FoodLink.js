@@ -113,9 +113,9 @@ export default function FoodLink(props) {
 				</Box>
 				<FoodTags
 					sx={{ height: "10%" }}
-					cuisineTag={food.recipe.cuisineType}
-					mealTag={food.recipe.mealType}
-					dishTag={food.recipe.dishType}
+					cuisineTypes={food.recipe.cuisineType}
+					mealTypes={food.recipe.mealType}
+					dishTypes={food.recipe.dishType}
 				/>
 			</Card>
 			<RecipeDialog
