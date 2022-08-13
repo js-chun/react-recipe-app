@@ -39,6 +39,10 @@ export default function FoodApp() {
 		setShowingFavs(true)
 	}
 
+	const updateFoods = (foodsData) => {
+		setFoods(foodsData)
+	}
+
 	const handlePrevPage = async () => {
 		if (searchPgs.searchUrls.length > 0) {
 			let updatedPages = { ...searchPgs }
@@ -95,11 +99,17 @@ export default function FoodApp() {
 			<Typography align="center" variant="h2">
 				Simple Recipe App
 			</Typography>
-			<FoodSearch handleFoodSearch={handleFoodSearch} resetFoods={resetFoods} />
+			<FoodSearch
+				foods={foods}
+				handleFoodSearch={handleFoodSearch}
+				resetFoods={resetFoods}
+				updateFoods={updateFoods}
+			/>
 			{foods && (
 				<FoodList
 					loading={loading}
 					foods={foods}
+					updateFoods={updateFoods}
 					handlePrevPage={handlePrevPage}
 					handleNextPage={handleNextPage}
 				/>

@@ -19,8 +19,8 @@ import { FavsContext } from "./contexts/FavsContext"
 import RecipeDialog from "./RecipeDialog"
 
 export default function FoodLink(props) {
-	const { updateFavs } = useContext(FavsContext)
-	const { food } = props
+	const { showFavs, updateFavs } = useContext(FavsContext)
+	const { food, foods, updateFoods, inFavs } = props
 	const [open, setOpen] = useState(false)
 
 	const consolidateNutrients = (foodObj) => {
@@ -42,6 +42,12 @@ export default function FoodLink(props) {
 
 	const handleFavorites = (evt) => {
 		updateFavs(food, evt.target.checked)
+		if (!evt.target.checked & showFavs) {
+			let newFavs = foods.filter(
+				(oneFood) => oneFood.recipe.uri !== food.recipe.uri
+			)
+			updateFoods(newFavs)
+		}
 	}
 
 	const handleClickOpen = () => {
@@ -87,7 +93,7 @@ export default function FoodLink(props) {
 					<Checkbox
 						icon={<FavoriteBorder />}
 						checkedIcon={<Favorite />}
-						checked={props.inFavs}
+						checked={inFavs}
 						onChange={handleFavorites}
 					/>
 					<IconButton onClick={handleClickOpen}>

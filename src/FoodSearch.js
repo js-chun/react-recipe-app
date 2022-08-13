@@ -14,7 +14,8 @@ import ClearIcon from "@mui/icons-material/Clear"
 import { FavsContext } from "./contexts/FavsContext"
 
 export default function FoodSearch(props) {
-	const { setShowingFavs } = useContext(FavsContext)
+	const { favs, showFavs, setShowingFavs } = useContext(FavsContext)
+	const { foods, handleFoodSearch, resetFoods, updateFoods } = props
 	const [query, setQuery] = useState("")
 	const [filters, setFilters] = useState({
 		mealType: [],
@@ -40,7 +41,7 @@ export default function FoodSearch(props) {
 			//error handling
 		})
 		setShowingFavs(false)
-		props.handleFoodSearch(result.data, url)
+		handleFoodSearch(result.data, url)
 	}
 
 	const debounceQuery = useCallback(
@@ -58,7 +59,6 @@ export default function FoodSearch(props) {
 	}
 
 	const handleFilterChange = (filterType, value, isChecked) => {
-		//filter change with favorites to be included
 		const newObject = { ...filters }
 		if (isChecked) {
 			if (!newObject[filterType]) newObject[filterType] = []
@@ -71,7 +71,32 @@ export default function FoodSearch(props) {
 		}
 		setFilters(newObject)
 		if (query) {
-			modifyUrl(query, newObject)
+			if (!showFavs) modifyUrl(query, newObject)
+		} else {
+			if (showFavs) {
+				let updatedFoods = []
+				if (
+					newObject.cuisineType.length === 0 &&
+					newObject.dishType.length === 0 &&
+					newObject.mealType.length === 0
+				) {
+					updatedFoods = [...favs]
+				} else {
+					updatedFoods = favs.filter((food) => {
+						for (let cType of newObject.cuisineType) {
+							if (food.recipe.cuisineType.includes(cType)) return true
+						}
+						for (let mType of newObject.mealType) {
+							if (food.recipe.mealType.includes(mType)) return true
+						}
+						for (let dType of newObject.dishType) {
+							if (food.recipe.dishType.includes(dType)) return true
+						}
+						return false
+					})
+				}
+				updateFoods(updatedFoods)
+			}
 		}
 	}
 
@@ -82,7 +107,7 @@ export default function FoodSearch(props) {
 			dishType: [],
 			cuisineType: [],
 		})
-		props.resetFoods()
+		resetFoods()
 	}
 
 	return (
