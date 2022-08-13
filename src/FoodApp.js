@@ -9,6 +9,7 @@ export default function FoodApp() {
 	const initial = JSON.parse(window.localStorage.getItem("fav_recipes")) || []
 	const [foods, setFoods] = useState(initial)
 	const [favs, setFavs] = useState(initial)
+	const [showFavs, setShowFavs] = useState(true)
 	const [searchPgs, setSearchPgs] = useState({ onPage: 0, searchUrls: [] })
 	const [loading, setLoading] = useState(false)
 
@@ -33,8 +34,13 @@ export default function FoodApp() {
 		}, 1500)
 	}
 
+	const showingFavs = (isShowingFavs) => {
+		setShowFavs(isShowingFavs)
+	}
+
 	const resetFoods = () => {
 		setFoods(favs)
+		setShowFavs(true)
 	}
 
 	const handlePrevPage = async () => {
@@ -109,7 +115,12 @@ export default function FoodApp() {
 			<Typography align="center" variant="h2">
 				Simple Recipe App
 			</Typography>
-			<FoodSearch handleFoodSearch={handleFoodSearch} resetFoods={resetFoods} />
+			<FoodSearch
+				handleFoodSearch={handleFoodSearch}
+				resetFoods={resetFoods}
+				showingFavs={showingFavs}
+				isShowingFavs={showFavs}
+			/>
 			{foods && (
 				<FoodList
 					loading={loading}
@@ -118,6 +129,7 @@ export default function FoodApp() {
 					handleAddFavs={handleAddFavs}
 					handlePrevPage={handlePrevPage}
 					handleNextPage={handleNextPage}
+					isShowingFavs={showFavs}
 				/>
 			)}
 		</Container>

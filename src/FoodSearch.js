@@ -37,6 +37,7 @@ export default function FoodSearch(props) {
 			return
 			//error handling
 		})
+		props.showingFavs(false)
 		props.handleFoodSearch(result.data, url)
 	}
 

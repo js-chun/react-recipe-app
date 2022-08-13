@@ -14,7 +14,6 @@ import RiceBowlIcon from "@mui/icons-material/RiceBowl"
 import KitchenIcon from "@mui/icons-material/Kitchen"
 import DinnerDiningIcon from "@mui/icons-material/DinnerDining"
 import InfoIcon from "@mui/icons-material/Info"
-import Box from "@mui/material/Box"
 
 import RecipeDialog from "./RecipeDialog"
 
