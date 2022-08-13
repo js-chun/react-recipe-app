@@ -1,4 +1,5 @@
 import { ThemeProvider, createTheme } from "@mui/material/styles"
+import { FavsProvider } from "./contexts/FavsContext"
 import FoodApp from "./FoodApp"
 
 const theme = createTheme({
@@ -21,7 +22,9 @@ const theme = createTheme({
 function App() {
 	return (
 		<ThemeProvider theme={theme}>
-			<FoodApp />
+			<FavsProvider>
+				<FoodApp />
+			</FavsProvider>
 		</ThemeProvider>
 	)
 }

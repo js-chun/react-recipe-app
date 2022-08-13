@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react"
+import React, { useState, useCallback, useContext } from "react"
 import FoodFilters from "./FoodFilters"
 import Paper from "@mui/material/Paper"
 import TextField from "@mui/material/TextField"
@@ -11,8 +11,10 @@ import AccordionDetails from "@mui/material/AccordionDetails"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 import Button from "@mui/material/Button"
 import ClearIcon from "@mui/icons-material/Clear"
+import { FavsContext } from "./contexts/FavsContext"
 
 export default function FoodSearch(props) {
+	const { setShowingFavs } = useContext(FavsContext)
 	const [query, setQuery] = useState("")
 	const [filters, setFilters] = useState({
 		mealType: [],
@@ -37,7 +39,7 @@ export default function FoodSearch(props) {
 			return
 			//error handling
 		})
-		props.showingFavs(false)
+		setShowingFavs(false)
 		props.handleFoodSearch(result.data, url)
 	}
 

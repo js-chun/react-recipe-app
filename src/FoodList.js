@@ -1,12 +1,14 @@
-import React from "react"
+import React, { useContext } from "react"
 import Paper from "@mui/material/Paper"
 import Typography from "@mui/material/Typography"
 import Grid from "@mui/material/Grid"
 import FoodLink from "./FoodLink"
 import FoodListNav from "./FoodListNav"
 import CircularProgress from "@mui/material/CircularProgress"
+import { FavsContext } from "./contexts/FavsContext"
 
 export default function FoodList(props) {
+	const { favs } = useContext(FavsContext)
 	return (
 		<Paper sx={{ m: 3, p: 2 }}>
 			<Typography align="center" variant="h3">
@@ -28,10 +30,7 @@ export default function FoodList(props) {
 						<Grid item md={6}>
 							<FoodLink
 								food={food}
-								inFavs={props.favs.some(
-									(fav) => fav.recipe.uri === food.recipe.uri
-								)}
-								handleAddFavs={props.handleAddFavs}
+								inFavs={favs.some((fav) => fav.recipe.uri === food.recipe.uri)}
 							/>
 						</Grid>
 					))}

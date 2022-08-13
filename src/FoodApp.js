@@ -1,15 +1,15 @@
-import { useState, useEffect } from "react"
+import { useState, useContext } from "react"
 import axios from "axios"
 import FoodSearch from "./FoodSearch"
 import FoodList from "./FoodList"
 import Container from "@mui/material/Container"
 import Typography from "@mui/material/Typography"
+import { FavsContext } from "./contexts/FavsContext"
 
 export default function FoodApp() {
+	const { favs, setShowingFavs } = useContext(FavsContext)
 	const initial = JSON.parse(window.localStorage.getItem("fav_recipes")) || []
 	const [foods, setFoods] = useState(initial)
-	const [favs, setFavs] = useState(initial)
-	const [showFavs, setShowFavs] = useState(true)
 	const [searchPgs, setSearchPgs] = useState({ onPage: 0, searchUrls: [] })
 	const [loading, setLoading] = useState(false)
 
@@ -34,13 +34,9 @@ export default function FoodApp() {
 		}, 1500)
 	}
 
-	const showingFavs = (isShowingFavs) => {
-		setShowFavs(isShowingFavs)
-	}
-
 	const resetFoods = () => {
 		setFoods(favs)
-		setShowFavs(true)
+		setShowingFavs(true)
 	}
 
 	const handlePrevPage = async () => {
@@ -94,42 +90,18 @@ export default function FoodApp() {
 		}
 	}
 
-	const handleAddFavs = (foodData, isChecked) => {
-		let newFavs = [...favs]
-		if (isChecked) {
-			if (!newFavs.some((fav) => fav.recipe.uri === foodData.recipe.uri)) {
-				newFavs.push(foodData)
-			}
-		} else {
-			newFavs = newFavs.filter((fav) => fav.recipe.uri !== foodData.recipe.uri)
-		}
-		setFavs(newFavs)
-	}
-
-	useEffect(() => {
-		window.localStorage.setItem("fav_recipes", JSON.stringify(favs))
-	}, [favs])
-
 	return (
 		<Container>
 			<Typography align="center" variant="h2">
 				Simple Recipe App
 			</Typography>
-			<FoodSearch
-				handleFoodSearch={handleFoodSearch}
-				resetFoods={resetFoods}
-				showingFavs={showingFavs}
-				isShowingFavs={showFavs}
-			/>
+			<FoodSearch handleFoodSearch={handleFoodSearch} resetFoods={resetFoods} />
 			{foods && (
 				<FoodList
 					loading={loading}
 					foods={foods}
-					favs={favs}
-					handleAddFavs={handleAddFavs}
 					handlePrevPage={handlePrevPage}
 					handleNextPage={handleNextPage}
-					isShowingFavs={showFavs}
 				/>
 			)}
 		</Container>

@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useContext } from "react"
 import FoodTags from "./FoodTags"
 import Card from "@mui/material/Card"
 import CardHeader from "@mui/material/CardHeader"
@@ -14,10 +14,12 @@ import RiceBowlIcon from "@mui/icons-material/RiceBowl"
 import KitchenIcon from "@mui/icons-material/Kitchen"
 import DinnerDiningIcon from "@mui/icons-material/DinnerDining"
 import InfoIcon from "@mui/icons-material/Info"
+import { FavsContext } from "./contexts/FavsContext"
 
 import RecipeDialog from "./RecipeDialog"
 
 export default function FoodLink(props) {
+	const { updateFavs } = useContext(FavsContext)
 	const { food } = props
 	const [open, setOpen] = useState(false)
 
@@ -39,7 +41,7 @@ export default function FoodLink(props) {
 	}
 
 	const handleFavorites = (evt) => {
-		props.handleAddFavs(food, evt.target.checked)
+		updateFavs(food, evt.target.checked)
 	}
 
 	const handleClickOpen = () => {

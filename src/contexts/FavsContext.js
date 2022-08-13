@@ -6,7 +6,7 @@ export function FavsProvider(props) {
 	const [favs, setFavs] = useState(() => {
 		let val
 		try {
-			val = JSON.parse(window.localStorage.getItem("fav_recipes")) || []
+			val = JSON.parse(window.localStorage.getItem("fav_recipes"))
 		} catch (e) {
 			val = []
 		}
@@ -19,7 +19,7 @@ export function FavsProvider(props) {
 	}
 
 	const updateFavs = (foodData, isFavorite) => {
-		let newFavs = [...this.state.favs]
+		let newFavs = [...favs]
 		if (isFavorite) {
 			if (!newFavs.some((fav) => fav.recipe.uri === foodData.recipe.uri)) {
 				newFavs.push(foodData)
@@ -35,8 +35,9 @@ export function FavsProvider(props) {
 	}, [favs])
 
 	return (
-		<FavsContext.Provider value={{ favs, showFavs }}>
-			{this.props.children}
+		<FavsContext.Provider
+			value={{ favs, showFavs, setShowingFavs, updateFavs }}>
+			{props.children}
 		</FavsContext.Provider>
 	)
 }
